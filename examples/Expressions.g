@@ -26,7 +26,7 @@ e1 + e2;
 e1 * e2;
 #! (x + Sin( y ) * Log( z )) * (x * y + Sin( z )) ^ 2
 e := Sin( e1 ) / e2;
-#! Sin( (x + Sin( y ) * Log( z )) ) / (x * y + Sin( z )) ^ 2
+#! Sin( x + Sin( y ) * Log( z ) ) / (x * y + Sin( z )) ^ 2
 f := AsFunction( e );
 #! function( vec ) ... end
 Display( f );
@@ -36,7 +36,7 @@ Display( f );
 #!     x := vec[1];
 #!     y := vec[2];
 #!     z := vec[3];
-#!     return Sin( (x + Sin( y ) * Log( z )) ) / (x * y + Sin( z )) ^ 2;
+#!     return Sin( x + Sin( y ) * Log( z ) ) / (x * y + Sin( z )) ^ 2;
 #! end
 x := [ 3, 2, 4 ];
 #! [ 3, 2, 4 ]
@@ -45,7 +45,7 @@ f( x );
 dummy_input := ConvertToExpressions( [ "x1", "x2", "x3" ] );
 #! [ x1, x2, x3 ]
 f( dummy_input );
-#! Sin( (x1 + Sin( x2 ) * Log( x3 )) ) / (x1 * x2 + Sin( x3 )) ^ 2
+#! Sin( x1 + Sin( x2 ) * Log( x3 ) ) / (x1 * x2 + Sin( x3 )) ^ 2
 AssignExpressions( dummy_input );
 #! #I  MakeReadWriteGlobal: x1 already read-write
 #! #I  MakeReadWriteGlobal: x2 already read-write

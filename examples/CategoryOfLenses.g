@@ -299,8 +299,8 @@ Display( Lenses.AdagradOptimizer( :learning_rate := 0.01 )( 2 ) );
 #!
 #! ‣ x1 + x5 ^ 2
 #! ‣ x2 + x6 ^ 2
-#! ‣ x3 + 0.01 * x5 / (1.e-07 + Sqrt( (x1 + x5 ^ 2) ))
-#! ‣ x4 + 0.01 * x6 / (1.e-07 + Sqrt( (x2 + x6 ^ 2) ))
+#! ‣ x3 + 0.01 * x5 / (1.e-07 + Sqrt( x1 + x5 ^ 2 ))
+#! ‣ x4 + 0.01 * x6 / (1.e-07 + Sqrt( x2 + x6 ^ 2 ))
 Display( Lenses.AdamOptimizer(
           :learning_rate := 0.01, beta_1 := 0.9, beta_2 := 0.999 )( 2 ) );
 #! (ℝ^7, ℝ^7) -> (ℝ^2, ℝ^2) defined by:

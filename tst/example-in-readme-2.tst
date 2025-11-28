@@ -33,14 +33,15 @@ Underlying Morphism:
 -------------------
 ℝ^11 -> ℝ^3
 
-‣ Exp( (theta_1 * x1 + theta_2 * x2 + theta_3) )
-    / (Exp( theta_1 * x1 + theta_2 * x2 + theta_3 ) + Exp( (theta_4 * x1 + theta_5 * x2 + theta_6) ) + Exp( (theta_7 * x1 + theta_8 * x2 + theta_9) ))
-‣ Exp( (theta_4 * x1 + theta_5 * x2 + theta_6) )
-    / (Exp( theta_1 * x1 + theta_2 * x2 + theta_3 ) + Exp( (theta_4 * x1 + theta_5 * x2 + theta_6) ) + Exp( (theta_7 * x1 + theta_8 * x2 + theta_9) ))
-‣ Exp( (theta_7 * x1 + theta_8 * x2 + theta_9) )
-    / (Exp( theta_1 * x1 + theta_2 * x2 + theta_3 ) + Exp( (theta_4 * x1 + theta_5 * x2 + theta_6) ) + Exp( (theta_7 * x1 + theta_8 * x2 + theta_9) ))
+‣ Exp( theta_1 * x1 + theta_2 * x2 + theta_3 )
+    / (Exp( theta_1 * x1 + theta_2 * x2 + theta_3 ) + Exp( theta_4 * x1 + theta_5 * x2 + theta_6 ) + Exp( theta_7 * x1 + theta_8 * x2 + theta_9 ))
+‣ Exp( theta_4 * x1 + theta_5 * x2 + theta_6 )
+    / (Exp( theta_1 * x1 + theta_2 * x2 + theta_3 ) + Exp( theta_4 * x1 + theta_5 * x2 + theta_6 ) + Exp( theta_7 * x1 + theta_8 * x2 + theta_9 ))
+‣ Exp( theta_7 * x1 + theta_8 * x2 + theta_9 )
+    / (Exp( theta_1 * x1 + theta_2 * x2 + theta_3 ) + Exp( theta_4 * x1 + theta_5 * x2 + theta_6 ) + Exp( theta_7 * x1 + theta_8 * x2 + theta_9 ))
 
 gap> parameters := [ 0.1, -0.1, 0, 0.1, 0.2, 0, -0.2, 0.3, 0 ];;
+
 gap> x := [ 1, 2 ];;
 
 gap> prediction_x := Eval( f, [ parameters, x ] );
@@ -64,9 +65,11 @@ Underlying Morphism:
 -------------------
 ℝ^14 -> ℝ^1
 
-‣ ((Log( Exp( theta_1 * x1 + theta_2 * x2 + theta_3 ) + Exp( (theta_4 * x1 + theta_5 * x2 + theta_6) ) + Exp( (theta_7 * x1 + theta_8 * x2 + theta_9) ) ) - (theta_1 * x1 + theta_2 * x2 + theta_3)) * y1
-  + (Log( Exp( theta_1 * x1 + theta_2 * x2 + theta_3 ) + Exp( (theta_4 * x1 + theta_5 * x2 + theta_6) ) + Exp( (theta_7 * x1 + theta_8 * x2 + theta_9) ) ) - (theta_4 * x1 + theta_5 * x2 + theta_6)) * y2
-  + (Log( Exp( theta_1 * x1 + theta_2 * x2 + theta_3 ) + Exp( (theta_4 * x1 + theta_5 * x2 + theta_6) ) + Exp( (theta_7 * x1 + theta_8 * x2 + theta_9) ) ) - (theta_7 * x1 + theta_8 * x2 + theta_9)) * y3) / 3
+‣ ((Log( Exp( theta_1 * x1 + theta_2 * x2 + theta_3 ) + Exp( theta_4 * x1 + theta_5 * x2 + theta_6 ) + Exp( theta_7 * x1 + theta_8 * x2 + theta_9 ) )
+ - (theta_1 * x1 + theta_2 * x2 + theta_3)) * y1 + (Log( Exp( theta_1 * x1 + theta_2 * x2 + theta_3 ) + Exp( theta_4 * x1 + theta_5 * x2 + theta_6 )
+ + Exp( theta_7 * x1 + theta_8 * x2 + theta_9 ) ) - (theta_4 * x1 + theta_5 * x2 + theta_6)) * y2
+ + (Log( Exp( theta_1 * x1 + theta_2 * x2 + theta_3 ) + Exp( theta_4 * x1 + theta_5 * x2 + theta_6 ) + Exp( theta_7 * x1 + theta_8 * x2 + theta_9 ) )
+ - (theta_7 * x1 + theta_8 * x2 + theta_9)) * y3) / 3
 
 gap> Lenses := CategoryOfLenses( SkeletalSmoothMaps );
 CategoryOfLenses( SkeletalSmoothMaps )
@@ -130,18 +133,18 @@ Underlying Morphism:
 -------------------
 ℝ^2 -> ℝ^3
 
-‣ Exp( (5.09137 * x1 + (- 4.83379) * x2 + 3.06257) )
+‣ Exp( 5.09137 * x1 + (- 4.83379) * x2 + 3.06257 )
     / (Exp( 5.09137 * x1 + (- 4.83379) * x2 + 3.06257 )
-        + Exp( ((- 5.70976) * x1 + 0.837175 * x2 + (- 4.23622)) )
-          + Exp( ((- 1.71171) * x1 + 5.54301 * x2 + (- 4.80856)) ))
-‣ Exp( ((- 5.70976) * x1 + 0.837175 * x2 + (- 4.23622)) )
+        + Exp( (- 5.70976) * x1 + 0.837175 * x2 + (- 4.23622) )
+          + Exp( (- 1.71171) * x1 + 5.54301 * x2 + (- 4.80856) ))
+‣ Exp( (- 5.70976) * x1 + 0.837175 * x2 + (- 4.23622) )
     / (Exp( 5.09137 * x1 + (- 4.83379) * x2 + 3.06257 )
-          + Exp( ((- 5.70976) * x1 + 0.837175 * x2 + (- 4.23622)) )
-            + Exp( ((- 1.71171) * x1 + 5.54301 * x2 + (- 4.80856)) ))
-‣ Exp( ((- 1.71171) * x1 + 5.54301 * x2 + (- 4.80856)) )
+          + Exp( (- 5.70976) * x1 + 0.837175 * x2 + (- 4.23622) )
+            + Exp( (- 1.71171) * x1 + 5.54301 * x2 + (- 4.80856) ))
+‣ Exp( (- 1.71171) * x1 + 5.54301 * x2 + (- 4.80856) )
     / (Exp( 5.09137 * x1 + (- 4.83379) * x2 + 3.06257 )
-          + Exp( ((- 5.70976) * x1 + 0.837175 * x2 + (- 4.23622)) )
-            + Exp( ((- 1.71171) * x1 + 5.54301 * x2 + (- 4.80856)) ))
+          + Exp( (- 5.70976) * x1 + 0.837175 * x2 + (- 4.23622) )
+            + Exp( (- 1.71171) * x1 + 5.54301 * x2 + (- 4.80856) ))
 
 gap> f_theta := UnderlyingMorphism( f_theta );
 ℝ^2 -> ℝ^3

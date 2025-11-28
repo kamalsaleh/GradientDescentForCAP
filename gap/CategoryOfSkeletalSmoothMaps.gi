@@ -706,7 +706,7 @@ InstallGlobalFunction( CategoryOfSkeletalSmoothMaps,
 end );
 
 ##
-InstallValue( SkeletalSmoothMaps, CategoryOfSkeletalSmoothMaps( ) );
+BindGlobal( "SkeletalSmoothMaps", CategoryOfSkeletalSmoothMaps( ) );
 
 ##
 InstallOtherMethod( IsCongruentForMorphisms,

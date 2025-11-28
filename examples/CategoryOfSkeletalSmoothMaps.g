@@ -68,7 +68,7 @@ Display( h );
 #!
 #! ‣ 3 * (x1 ^ 2 + Sin( x2 ))
 #! ‣ Exp( Exp( x1 ) + 3 * x2 )
-#! ‣ (x1 ^ 2 + Sin( x2 )) ^ 3 + Log( (Exp( x1 ) + 3 * x2) )
+#! ‣ (x1 ^ 2 + Sin( x2 )) ^ 3 + Log( Exp( x1 ) + 3 * x2 )
 x;
 #! [ 0.2, 0.3 ]
 Map( h )( x );
@@ -94,7 +94,7 @@ Display( s );
 #!
 #! ‣ 3 * x1 ^ 2 + 3 * Sin( x2 )
 #! ‣ Exp( 3 * x2 + Exp( x1 ) )
-#! ‣ (x1 ^ 2 + Sin( x2 )) ^ 3 + Log( (3 * x2 + Exp( x1 )) )
+#! ‣ (x1 ^ 2 + Sin( x2 )) ^ 3 + Log( 3 * x2 + Exp( x1 ) )
 R2 := Smooth.( 2 );
 #! ℝ^2
 R3 := Smooth.( 3 );
@@ -221,8 +221,8 @@ Display( Smooth.PowerBase( 6 ) );
 Display( Smooth.Sigmoid( 2 ) );
 #! ℝ^2 -> ℝ^2
 #!
-#! ‣ 1 / (1 + Exp( (- x1) ))
-#! ‣ 1 / (1 + Exp( (- x2) ))
+#! ‣ 1 / (1 + Exp( - x1 ))
+#! ‣ 1 / (1 + Exp( - x2 ))
 Display( Smooth.Softmax( 2 ) );
 #! ℝ^2 -> ℝ^2
 #!
@@ -235,11 +235,11 @@ Display( Smooth.QuadraticLoss( 2 ) );
 Display( Smooth.BinaryCrossEntropyLoss( 1 ) );
 #! ℝ^2 -> ℝ^1
 #!
-#! ‣ - (x2 * Log( x1 ) + (1 - x2) * Log( (1 - x1) ))
+#! ‣ - (x2 * Log( x1 ) + (1 - x2) * Log( 1 - x1 ))
 Display( Smooth.SigmoidBinaryCrossEntropyLoss( 1 ) );
 #! ℝ^2 -> ℝ^1
 #!
-#! ‣ Log( 1 + Exp( (- x1) ) ) + (1 - x2) * x1
+#! ‣ Log( 1 + Exp( - x1 ) ) + (1 - x2) * x1
 Display( Smooth.CrossEntropyLoss( 3 ) );
 #! ℝ^6 -> ℝ^1
 #!

@@ -1,6 +1,5 @@
 gap> LoadPackage( "GradientDescentForCAP" );
 true
-
 gap> Para := CategoryOfParametrisedMorphisms( SkeletalSmoothMaps );
 CategoryOfParametrisedMorphisms( SkeletalSmoothMaps )
 

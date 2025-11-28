@@ -17,8 +17,6 @@ DeclareCategory( "IsMorphismInCategoryOfSkeletalSmoothMaps",
 
 DeclareGlobalFunction( "CategoryOfSkeletalSmoothMaps" );
 
-DeclareGlobalVariable( "SkeletalSmoothMaps" );
-
 DeclareOperation( "SmoothMorphism",
     [ IsCategoryOfSkeletalSmoothMaps, IsObjectInCategoryOfSkeletalSmoothMaps, IsDenseList, IsObjectInCategoryOfSkeletalSmoothMaps ] );
 
