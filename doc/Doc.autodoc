@@ -1,1 +1,20 @@
+@Chapter Introduction
+
+This package provides tools for exploring categorical machine learning using the CAP (Categories, Algorithms, Programming) system.
+It implements automatic differentiation using the lens pattern and provides constructs for building and training neural networks.
+
+@Section Overview
+
+The package implements the following main concepts:
+
+* **Category of Skeletal Smooth Maps**: A category where objects are Euclidean spaces $\mathbb{R}^n$ and morphisms are smooth maps with their Jacobian matrices.
+
+* **Category of Lenses**: A category that models bidirectional data flow, essential for backpropagation in neural networks.
+
+* **Category of Parametrised Morphisms**: A category that represents morphisms with learnable parameters, used to model neural network layers.
+
+* **Expressions**: A symbolic expression system for representing mathematical formulas.
+
+* **Neural Networks**: High-level operations for constructing and training neural networks.
+
 @Chapter Examples and Tests
