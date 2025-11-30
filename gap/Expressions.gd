@@ -12,10 +12,13 @@
 #!  The &GAP; category of symbolic expressions.
 #!  Expressions are used to represent mathematical formulas symbolically,
 #!  allowing operations like differentiation to be performed symbolically before evaluation.
+#! @Arguments e
 DeclareCategory( "IsExpression", IsNearAdditiveElementWithInverse and IsAdditiveElement and IsMultiplicativeElement );
 
 #! @Description
 #!  The &GAP; category of constant expressions (expressions with no variables).
+#!  Constant expressions represent fixed numerical values and can be evaluated directly.
+#! @Arguments e
 DeclareCategory( "IsConstantExpression", IsExpression );
 
 #! @Section Constructors
@@ -31,7 +34,7 @@ DeclareOperation( "Expression", [ IsDenseList, IsString ] );
 #!  The expression will have no variables and will also be registered as a global constant.
 #! @Arguments string
 #! @Returns a constant expression
-DeclareOperation( "Expression", [ IsString ] );
+DeclareOperation( "ConstantExpression", [ IsString ] );
 
 #! @Section Attributes
 
@@ -48,29 +51,21 @@ DeclareAttribute( "Variables", IsExpression );
 DeclareAttribute( "String", IsExpression );
 
 #! @Description
-#!  Convert an expression to a function that can be evaluated numerically.
+#!  Convert an expression to a &GAP; function that can be evaluated numerically.
 #! @Arguments e
 #! @Returns a function
 DeclareAttribute( "AsFunction", IsExpression );
 
-#! @Description
-#!  Convert a string expression with given variables to a function.
-#! @Arguments variables, string
-#! @Returns a function
 DeclareOperation( "AsFunction", [ IsDenseList, IsString ] );
 
 #! @Section Operations
 
-#! @Description
-#!  Generate a list of dummy input strings using base name <A>var</A> with indices from 1 to <A>n</A>.
-#!  For example, <C>DummyInputStrings("x", 3)</C> returns <C>["x1", "x2", "x3"]</C>.
-#! @Arguments var, n
-#! @Returns a list of strings
 DeclareOperation( "DummyInputStrings", [ IsString, IsInt ] );
 
 #! @Description
 #!  Generate a list of dummy input expressions using base name <A>var</A> with indices from 1 to <A>n</A>.
-#!  For example, <C>DummyInput("x", 3)</C> returns a list of three expressions x1, x2, x3.
+#!  For example, <C>DummyInput("x", 3)</C> returns a list of three expressions <C>x1, x2, x3</C>.
+#!  Those can be used as input to smooth morphisms constructed from expressions.
 #! @Arguments var, n
 #! @Returns a list of expressions
 DeclareOperation( "DummyInput", [ IsString, IsInt ] );
@@ -78,24 +73,31 @@ DeclareOperation( "DummyInput", [ IsString, IsInt ] );
 #! @Section Global functions
 
 #! @Description
-#!  Convert a list of constant values to a list of constant expressions.
+#!  Assign to each string in <A>constants</A> a global constant expression defined by that string.
+#!  The variables of these expressions will be empty.
+#!  For example, <C>ConvertToConstantExpressions( ["Pi"] )</C> returns <C>[ Pi ]</C>,
+#!  and <C>Variables(Pi)=[]</C>.
 #! @Arguments constants
 #! @Returns a list of constant expressions
 DeclareGlobalFunction( "ConvertToConstantExpressions" );
 
 #! @Description
-#!  Convert a list of variable name strings to a list of expressions.
+#!  Assigns to each string in <A>variables</A> an expression with the same name.
+#!  The variables of these expressions equals the list <A>variables</A> itself.
+#!  After that, one would be able for example to construct more complex expressions using these variables,
+#!  e.g., <C>x1 + Sin(x2)</C>.
+#!  For example, <C>ConvertToExpressions( ["x1", "x2"] )</C> returns a pair <C>[ x1, x2 ]</C>,
+#!  where <C>x1</C> and <C>x2</C> are expressions with string representations "x1" and "x2",
+#!  and <C>Variables(x1) = ["x1", "x2"]</C>, <C>Variables(x2) = ["x1", "x2"]</C>.
 #! @Arguments variables
 #! @Returns a list of expressions
-DeclareGlobalFunction( "ConvertToExpressions" );
+DeclareGlobalFunction( "CreateContextualVariables" );
 
 #! @Description
 #!  Assign each expression in <A>vars</A> to a global variable with the same name.
+#!  For example, if <C>vars = [ x1, x2 ]</C>, this function will create global variables <C>x1</C> and <C>x2</C>
+#!  corresponding to the expressions in the list.
 #! @Arguments vars
 DeclareGlobalFunction( "AssignExpressions" );
 
-#! @Section Global variables
-
-#! @Description
-#!  A list containing all globally defined constant expressions.
 DeclareGlobalVariable( "LIST_OF_GLOBAL_CONSTANT_EXPRESSIONS" );

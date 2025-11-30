@@ -424,7 +424,7 @@ InstallOtherMethod( JacobianMatrix,
   
   function ( vars, map_func, indices )
     
-    return JacobianMatrix( map_func( ConvertToExpressions( vars ) ), indices );
+    return JacobianMatrix( map_func( CreateContextualVariables( vars ) ), indices );
     
 end );
 
@@ -460,7 +460,7 @@ InstallOtherMethod( LazyJacobianMatrix,
       function( vec )
          
         if exps = fail then
-          exps := map_func( ConvertToExpressions( vars ) );
+          exps := map_func( CreateContextualVariables( vars ) );
         fi;
         
         return LazyJacobianMatrix( exps, indices )( vec );

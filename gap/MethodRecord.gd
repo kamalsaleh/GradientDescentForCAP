@@ -4,16 +4,19 @@
 # Declarations
 #
 
-#! @Chapter operations for machine learning in CAP
+#! @Chapter CAP Operations
 
-#! @Section Method Record
-
-#! @Description
-#!  The internal method name record for Cartesian Reverse Differential Category operations.
-#!  This record defines operations used for automatic differentiation in CAP categories.
 DeclareGlobalVariable( "CRDC_INTERNAL_METHOD_NAME_RECORD" );
 
-#! @Section Reverse Differentiation
+#! @Section Basic Operations
+
+#! @Description
+#!  Compute the pointwise multiplication of two morphisms with the same source and target.
+#!  For morphisms $f, g: A \to B$, returns a morphism whose output at each component
+#!  is the product of the outputs of $f$ and $g$.
+#! @Arguments alpha, beta
+#! @Returns a morphism
+DeclareOperation( "MultiplicationForMorphisms", [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
 #! @Description
 #!  Compute the reverse differential of a morphism <A>alpha</A> with given source and target objects.
@@ -31,13 +34,3 @@ DeclareOperation( "ReverseDifferentialWithGivenObjects",
 #! @Arguments alpha
 #! @Returns a morphism
 DeclareAttribute( "ReverseDifferential", IsCapCategoryMorphism );
-
-#! @Section Morphism Operations
-
-#! @Description
-#!  Compute the pointwise multiplication of two morphisms with the same source and target.
-#!  For morphisms $f, g: A \to B$, returns a morphism whose output at each component
-#!  is the product of the outputs of $f$ and $g$.
-#! @Arguments alpha, beta
-#! @Returns a morphism
-DeclareOperation( "MultiplicationForMorphisms", [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );

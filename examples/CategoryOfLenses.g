@@ -1,6 +1,6 @@
-#! @Chapter Examples and Tests
+#! @Chapter Category of Lenses
 
-#! @Section Category of Lenses
+#! @Section Example
 
 LoadPackage( "GradientDescentForCAP" );
 

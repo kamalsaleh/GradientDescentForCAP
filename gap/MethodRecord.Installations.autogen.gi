@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# GradientDescentForCAP: Exploring categorical machine learning in CAP
+# GradientDescentForCAP: Gradient Descent Learning via Category Theory (CAP Framework)
 #
 # Implementations
 #

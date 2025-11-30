@@ -1,6 +1,6 @@
-#! @Chapter Examples and Tests
+#! @Chapter Category of Parametrised Morphisms
 
-#! @Section Category of Parametrised Morphisms
+#! @Section Example
 
 LoadPackage( "GradientDescentForCAP" );
 

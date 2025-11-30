@@ -40,17 +40,8 @@ DeclareOperation( "SplitDenseList", [ IsDenseList, IsPosInt ] );
 
 #! @Section Helper functions
 
-#! @Description
-#!  Return <A>x</A> if <A>bool</A> is true, otherwise return <A>y</A>.
-#! @Arguments bool, x, y
-#! @Returns either x or y
 DeclareGlobalFunction( "SelectBasedOnCondition" );
 
-#! @Description
-#!  Call function <A>f</A> with arguments <A>l</A> if <A>bool</A> is true,
-#!  otherwise call function <A>g</A> with arguments <A>l</A>.
-#! @Arguments bool, f, g, l
-#! @Returns the result of the called function
 DeclareGlobalFunction( "CallFuncListBasedOnCondition" );
 
 #! @Description
@@ -71,18 +62,20 @@ DeclareGlobalFunction( "MultiplyMatrices" );
 #! @Section Python integration
 
 #! @Description
-#!  Create a scatter plot using Python's matplotlib.
-#!  <A>points</A> is a list of 2D points, <A>labels</A> is a list of class labels.
-#! @Arguments points, labels
-#! @Returns the directory containing the plot
-DeclareOperation( "ScatterPlotUsingPython", [ IsDenseList, IsDenseList ] );
+#!  Compute the partial derivative of an expression with respect to the <A>i</A>-th variable.
+#!  <A>vars</A> is a list of variable names, <A>str</A> is the expression string.
+#! See the example in the Expressions chapter.
+#! @Arguments vars, str, i
+#! @Returns a function
+DeclareOperation( "Diff", [ IsDenseList, IsString, IsPosInt ] );
 
 #! @Description
-#!  Simplify expressions using Python's SymPy library.
-#!  <A>vars</A> is a list of variable names, <A>exps</A> is a list of expression strings.
-#! @Arguments vars, exps
-#! @Returns a list of simplified expression strings
-DeclareOperation( "SimplifyExpressionUsingPython", [ IsDenseList, IsDenseList ] );
+#!  Compute the lazy partial derivative of an expression with respect to the <A>i</A>-th variable.
+#!  <A>vars</A> is a list of variable names, <A>str</A> is the expression string.
+#! See the example in the Expressions chapter.
+#! @Arguments vars, str, i
+#! @Returns a function
+DeclareOperation( "LazyDiff", [ IsDenseList, IsString, IsPosInt ] );
 
 #! @Description
 #!  Compute the Jacobian matrix using Python's SymPy library.
@@ -100,29 +93,25 @@ DeclareOperation( "JacobianMatrixUsingPython", [ IsDenseList, IsDenseList, IsDen
 DeclareOperation( "LazyJacobianMatrix", [ IsDenseList, IsDenseList, IsDenseList ] );
 
 #! @Description
+#!  Create a scatter plot using Python's matplotlib.
+#!  <A>points</A> is a list of 2D points, <A>labels</A> is a list of class labels.
+#! @Arguments points, labels
+#! @Returns the directory containing the plot
+DeclareOperation( "ScatterPlotUsingPython", [ IsDenseList, IsDenseList ] );
+
+#! @Description
+#!  Simplify expressions using Python's SymPy library.
+#!  <A>vars</A> is a list of variable names, <A>exps</A> is a list of expression strings.
+#! @Arguments vars, exps
+#! @Returns a list of simplified expression strings
+DeclareOperation( "SimplifyExpressionUsingPython", [ IsDenseList, IsDenseList ] );
+
+#! @Description
 #!  Convert expressions to LaTeX format using Python's SymPy library.
 #!  <A>vars</A> is a list of variable names, <A>exps</A> is a list of expression strings.
 #! @Arguments vars, exps
 #! @Returns a list of LaTeX strings
 DeclareOperation( "LaTeXOutputUsingPython", [ IsDenseList, IsDenseList ] );
-
-#! @Section Differentiation
-
-#! @Description
-#!  Compute the lazy partial derivative of an expression with respect to the <A>i</A>-th variable.
-#!  <A>vars</A> is a list of variable names, <A>str</A> is the expression string.
-#! @Arguments vars, str, i
-#! @Returns a function
-DeclareOperation( "LazyDiff", [ IsDenseList, IsString, IsPosInt ] );
-
-#! @Description
-#!  Compute the partial derivative of an expression with respect to the <A>i</A>-th variable.
-#!  <A>vars</A> is a list of variable names, <A>str</A> is the expression string.
-#! @Arguments vars, str, i
-#! @Returns a function
-DeclareOperation( "Diff", [ IsDenseList, IsString, IsPosInt ] );
-
-#! @Section Cython compilation
 
 #! @Description
 #!  Compile functions to Cython for improved performance.

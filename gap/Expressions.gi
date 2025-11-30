@@ -36,7 +36,7 @@ InstallMethod( Expression,
 end );
 
 ##
-InstallMethod( Expression,
+InstallMethod( ConstantExpression,
           [ IsString ],
   
   function ( string )
@@ -74,7 +74,7 @@ InstallOtherMethod( ViewString,
 end );
 
 ##
-InstallGlobalFunction( ConvertToExpressions,
+InstallGlobalFunction( CreateContextualVariables,
   
   variables -> List( variables, var -> Expression( variables, var ) )
 );
@@ -101,7 +101,7 @@ InstallMethod( DummyInput,
   
   function ( var, r )
     
-    return ConvertToExpressions( DummyInputStrings( var, r ) );
+    return CreateContextualVariables( DummyInputStrings( var, r ) );
     
 end );
 
@@ -130,6 +130,8 @@ InstallGlobalFunction( AssignExpressions,
   
   function ( vars )
     local func;
+    
+    Assert( 0, ForAll( vars, IsExpression ) );
     
     func :=
       function ( e )

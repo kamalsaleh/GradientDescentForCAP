@@ -5,7 +5,7 @@ gap> Lenses := CategoryOfLenses( Smooth );;
 gap> Para := CategoryOfParametrisedMorphisms( Smooth );;
 gap> Para_Lenses := CategoryOfParametrisedMorphisms( Lenses );;
 gap> ell := LossMorphismOfNeuralNetwork( Para, 2, [], 1, "IdFunc" );;
-gap> dummy_input := ConvertToExpressions( [ "w1", "w2", "b1", "x1", "x2", "y" ] );
+gap> dummy_input := CreateContextualVariables( [ "w1", "w2", "b1", "x1", "x2", "y" ] );
 [ w1, w2, b1, x1, x2, y ]
 gap> Display( ell : dummy_input := dummy_input );
 ℝ^3 -> ℝ^1 defined by:

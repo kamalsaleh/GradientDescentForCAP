@@ -24,7 +24,7 @@ InstallGlobalFunction( CategoryOfSkeletalSmoothMaps,
                   : overhead := false
                   );
     
-    Smooth!.is_computable := false;
+    #Smooth!.is_computable := false;
     
     SetIsCartesianCategory( Smooth, true );
     SetIsStrictMonoidalCategory( Smooth, true );
@@ -111,6 +111,47 @@ InstallGlobalFunction( CategoryOfSkeletalSmoothMaps,
       function ( Smooth, f )
         
         return IsFunction( Map( f ) ) and IsFunction( JacobianMatrix( f ) );
+        
+    end );
+    
+    ##
+    AddIsCongruentForMorphisms( Smooth,
+      
+      function ( Smooth, f, g )
+        local rank_S, 1000_random_inputs, compare_maps, compare_jacobian_matrices;
+        
+        # DisplayString operation applies both maps on dummy inputs
+        if DisplayString( f ) = DisplayString( g ) then
+          
+          return true;
+          
+        else
+          
+          # If the DisplayString check fails, we do numerical tests
+          rank_S := RankOfObject( Source( f ) );
+          
+          1000_random_inputs := List( [ 1 .. 1000 ], i -> List( [ 1 .. rank_S ], j -> 0.01 * Random( [ 1 .. 100 ] ) ) );
+          
+          compare_maps :=
+            ForAll( 1000_random_inputs, x -> ForAll( ListN( Eval( f, x ), Eval( g, x ), { a, b } -> AbsoluteValue(a - b) < 1.e-6 ), IdFunc ) );
+          
+          compare_jacobian_matrices :=
+            ForAll( 1000_random_inputs, x -> ForAll( ListN( EvalJacobianMatrix( f, x ), EvalJacobianMatrix( g, x ), { a, b } -> AbsoluteValue( Sum(a - b) ) < 1.e-6 ), IdFunc ) );
+          
+          Info( InfoWarning, 2, "Based on numerical tests with 1000 random inputs and error tolerance 1.e-6, the output seems to be:" );
+          
+          return compare_maps and compare_jacobian_matrices;
+          
+        fi;
+        
+    end );
+    
+    ##
+    AddIsEqualForMorphisms( Smooth,
+      
+      function ( Smooth, f, g )
+        
+        return DisplayString( f ) = DisplayString( g );
         
     end );
     
@@ -709,37 +750,6 @@ end );
 BindGlobal( "SkeletalSmoothMaps", CategoryOfSkeletalSmoothMaps( ) );
 
 ##
-InstallOtherMethod( IsCongruentForMorphisms,
-        [ IsCategoryOfSkeletalSmoothMaps, IsMorphismInCategoryOfSkeletalSmoothMaps, IsMorphismInCategoryOfSkeletalSmoothMaps ],
-  
-  function ( Smooth, f, g )
-    local rank_S, 100_random_inputs, compare_maps, compare_jacobian_matrices;
-    
-    rank_S := RankOfObject( Source( f ) );
-    
-    100_random_inputs := List( [ 1 .. 100 ], i -> List( [ 1 .. rank_S ], j -> 0.001 * Random( [ 1 .. 100 ] ) ) );
-    
-    compare_maps :=
-      ForAll( 100_random_inputs, x -> ForAll( ListN( Eval( f, x ), Eval( g, x ), { a, b } -> (a - b) - 1.e-10 < 0. ), IdFunc ) );
-    
-    compare_jacobian_matrices :=
-      ForAll( 100_random_inputs, x -> ForAll( ListN( EvalJacobianMatrix( f, x ), EvalJacobianMatrix( g, x ), { a, b } -> Sum( a - b ) - 1.e-10 < 0. ), IdFunc ) );
-    
-    return compare_maps and compare_jacobian_matrices;
-    
-end );
-
-##
-InstallOtherMethod( IsEqualForMorphisms,
-        [ IsCategoryOfSkeletalSmoothMaps, IsMorphismInCategoryOfSkeletalSmoothMaps, IsMorphismInCategoryOfSkeletalSmoothMaps ],
-  
-  function ( Smooth, f, g )
-    
-    return Map( f ) = Map( g ) and JacobianMatrix( f ) = JacobianMatrix( g );
-    
-end );
-
-##
 InstallMethod( Eval,
           [ IsMorphismInCategoryOfSkeletalSmoothMaps, IsDenseList ],
   
@@ -818,7 +828,7 @@ InstallOtherMethod( SmoothMorphism,
     
     Assert( 0, Length( maps ) = rank_T );
     
-    vars := List( [ 1 .. rank_S ], i -> Concatenation( "x", String( i ) ) );
+    vars := DummyInputStrings( "x", rank_S );
     
     if use_python then
       
@@ -860,8 +870,10 @@ InstallOtherMethod( SmoothMorphism,
     rank_S := RankOfObject( S );
     rank_T := RankOfObject( T );
     
-    vars := List( [ 1 .. rank_S ], i -> Concatenation( "x", String( i ) ) );
+    vars := DummyInputStrings( "x", rank_S );
     
+    # Remark: The map takes a row-vector and returns a row-vector, e.g., map := vec -> [ vec[1]^2 + vec[2], Sin( vec[1] ) ]
+    # 
     if use_python then
       
       jacobian_matrix := JacobianMatrix( vars, map, [ 1 .. rank_S ] );
@@ -1223,7 +1235,7 @@ InstallOtherMethod( \.,
             jacobian_matrix :=
               function ( x )
                 
-                return DiagonalMat( List( List( [ 1 .. n ], i -> Exp( -x[i] ) ), exp -> exp / ( 1 - exp ) ^ 2 ) );
+                return DiagonalMat( List( List( [ 1 .. n ], i -> Exp( -x[i] ) ), exp -> exp / ( 1 + exp ) ^ 2 ) );
                 
               end;
               
@@ -1372,10 +1384,10 @@ InstallOtherMethod( \.,
     elif f = "BinaryCrossEntropyLoss_" then
         
         return
-          function ( n )
+          function ( arg... )
             local l1, l2;
             
-            if n <> 1 then
+            if Length( arg ) >= 1 and arg[1] <> 1 then
                 Error( "the passed argument 'n' must be equal to 1!\n" );
             fi;
             
@@ -1393,9 +1405,9 @@ InstallOtherMethod( \.,
     elif f = "BinaryCrossEntropyLoss" then
         
         return
-          function ( n )
+          function ( arg... )
             
-            if n <> 1 then
+            if Length( arg ) >= 1 and arg[1] <> 1 then
                 Error( "the passed argument 'n' must be equal to 1!\n" );
             fi;
             
@@ -1411,15 +1423,15 @@ InstallOtherMethod( \.,
     elif f = "SigmoidBinaryCrossEntropyLoss_" then
         
         return
-          function ( n )
+          function ( arg... )
             
-            if n <> 1 then
+            if Length( arg ) >= 1 and arg[1] <> 1 then
                 Error( "the passed argument 'n' must be equal to 1!\n" );
             fi;
             
             return PreCompose( Smooth,
                       DirectProductFunctorial( Smooth, [ Smooth.Sigmoid_( 1 ), Smooth.IdFunc( 1 ) ] ),
-                      Smooth.BinaryCrossEntropyLoss_( n ) );
+                      Smooth.BinaryCrossEntropyLoss_() );
             
           end;
           
@@ -1427,9 +1439,9 @@ InstallOtherMethod( \.,
     elif f = "SigmoidBinaryCrossEntropyLoss" then
         
         return
-          function ( n )
+          function ( arg... )
             
-            if n <> 1 then
+            if Length( arg ) >= 1 and arg[1] <> 1 then
                 Error( "the passed argument 'n' must be equal to 1!\n" );
             fi;
             
@@ -1778,11 +1790,45 @@ InstallGlobalFunction( DummyInputStringsForAffineTransformation,
 end );
 
 ##
+InstallGlobalFunction( AvailableSkeletalSmoothMaps,
+  
+  function ( arg... )
+    
+    return [
+      "Sqrt",
+      "Exp",
+      "Log",
+      "Sin",
+      "Cos",
+      "Constant",
+      "Zero",
+      "IdFunc",
+      "Relu",
+      "Sum",
+      "Mean",
+      "Variance",
+      "StandardDeviation",
+      "Mul",
+      "Power",
+      "PowerBase",
+      "Sigmoid",
+      "Softmax",
+      "QuadraticLoss",
+      "BinaryCrossEntropyLoss",
+      "SigmoidBinaryCrossEntropyLoss",
+      "CrossEntropyLoss",
+      "SoftmaxCrossEntropyLoss",
+      "AffineTransformation",
+    ];
+    
+end );
+
+##
 InstallGlobalFunction( DummyInputForAffineTransformation,
   
   function ( arg... )
     
-    return ConvertToExpressions( CallFuncList( DummyInputStringsForAffineTransformation, arg ) );
+    return CreateContextualVariables( CallFuncList( DummyInputStringsForAffineTransformation, arg ) );
     
 end );
 
@@ -1830,7 +1876,7 @@ InstallGlobalFunction( DummyInputForPolynomialTransformation,
   
   function ( arg... )
     
-    return ConvertToExpressions( CallFuncList( DummyInputStringsForPolynomialTransformation, arg ) );
+    return CreateContextualVariables( CallFuncList( DummyInputStringsForPolynomialTransformation, arg ) );
     
 end );
 

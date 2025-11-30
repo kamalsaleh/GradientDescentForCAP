@@ -20,7 +20,7 @@ gap> input_dim := 2;; output_dim := 3;; hidden_dims := [ ];;
 
 gap> f := PredictionMorphismOfNeuralNetwork( Para, input_dim, hidden_dims, output_dim, "Softmax" );;
 
-gap> input := ConvertToExpressions( [ "theta_1", "theta_2", "theta_3", "theta_4", "theta_5", "theta_6", "theta_7", "theta_8", "theta_9", "x1", "x2" ] );;
+gap> input := CreateContextualVariables( [ "theta_1", "theta_2", "theta_3", "theta_4", "theta_5", "theta_6", "theta_7", "theta_8", "theta_9", "x1", "x2" ] );;
 
 gap> Display( f : dummy_input := input );
 ℝ^2 -> ℝ^3 defined by:
@@ -52,7 +52,7 @@ gap> PositionMaximum( prediction_x );
 
 gap> ell := LossMorphismOfNeuralNetwork( Para, input_dim, hidden_dims, output_dim, "Softmax" );;
 
-gap> input := ConvertToExpressions( [ "theta_1", "theta_2", "theta_3", "theta_4", "theta_5", "theta_6", "theta_7", "theta_8", "theta_9", "x1", "x2", "y1", "y2", "y3" ] );;
+gap> input := CreateContextualVariables( [ "theta_1", "theta_2", "theta_3", "theta_4", "theta_5", "theta_6", "theta_7", "theta_8", "theta_9", "x1", "x2", "y1", "y2", "y3" ] );;
 
 gap> Display( ell : dummy_input := input );
 ℝ^5 -> ℝ^1 defined by:
